@@ -88,7 +88,7 @@ export async function getUserEvents(
     gamesNightsAtendeeDB.forEach((result) => {
       userEvents.push({
         id: result._id, //@ts-ignore
-        title: result.gameNightId?.gameId.gameName,//@ts-ignore
+        title: result.gameNightId?.gameId.gameName, //@ts-ignore
         start: result.gameNightId?.date, //@ts-ignore
         description: `You will play ${result.gameNightId?.gameId.gameName} at ${result.result.gameNightId?.city}, ${result.result.gameNightId?.ddress}`,
       });
@@ -118,12 +118,7 @@ export async function getAllEvents(
   res: express.Response
 ) {
   try {
-    const eventsDB = await GameNightModel.find()
-    .populate([
-      "gameId",
-      "hostId",
-    ]);
-
+    const eventsDB = await GameNightModel.find().populate(["gameId", "hostId"]);
 
     res.send({ results: eventsDB });
   } catch (error: any) {
@@ -153,39 +148,48 @@ export async function addUserToGameNight(
   }
 }
 
-// export async function checkIfUserCanJoinGame(
-//   req: express.Request,
-//   res: express.Response
-// ) {
-//   try {
-//     const { gameEventId, userId } = req.body;
-//     const query = `SELECT COUNT(game_event_id) as NumberOfAtendees FROM gamenight.game_events_spots
-//       WHERE game_events_spots.game_event_id = ${gameEventId}; SELECT game_events.spots_available FROM gamenight.game_events WHERE game_events_id = '${gameEventId}'; SELECT COUNT(ges.user_atendee_id)
-//       AS userAlredyJoined FROM gamenight.game_events_spots as ges
-//       WHERE ges.user_atendee_id = ${userId} AND ges.game_event_id = ${gameEventId}`;
-//     let userJoin;
-//     db.query(query, [1, 2, 3], (err, results, fields) => {
-//       try {
-//         if (err) throw err;
+export async function checkIfUserCanJoinGame(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const { gameEventId, userId } = req.body;
+    let userJoin;
+    if (!gameEventId || !userId)
+      throw new Error(
+        "no information on checkIfUserCanJoinGame at gamenightCtrl"
+      );
 
-//         if (results[0][0].NumberOfAtendees === results[1][0].spots_available) {
-//           userJoin = false;
-//         } else if (
-//           results[0][0].NumberOfAtendees < results[1][0].spots_available
-//         ) {
-//           userJoin = true;
-//         }
-//         if (results[2][0].userAlredyJoined > 0) {
-//           userJoin = false;
-//         }
-//         res.send({ userJoin: userJoin });
-//         // res.send(results)
-//       } catch (error) {
-//         console.log(err);
-//         res.status(500).send({ ok: false, error: err });
-//       }
-//     });
-//   } catch (error) {
-//     res.status(500).send({ error: error });
-//   }
-// }
+    const [gameEventDB, gameEventAtendees] = await Promise.all([
+      GameNightModel.findById(gameEventId).populate(["hostId", "gameId"]),
+      GameNightSpotsModel.find({ gameNightId: gameEventId }).populate([
+        "gameNightId",
+        "userAtendeeId",
+      ]),
+    ]);
+    if (!gameEventAtendees || !gameEventDB) {
+      throw new Error(
+        "no events found on checkIfUserCanJoinGame at gameNightCtrl"
+      );
+    } else {
+      if (gameEventDB.spotsAvaliable! < gameEventAtendees.length) {
+        userJoin = false;
+      } else {
+        if (
+          gameEventAtendees.some(
+            (user) => user.userAtendeeId?.toString() == userId.toString()
+          )
+        ) {
+          userJoin = false;
+        } else {
+          userJoin = true;
+        }
+      }
+    }
+
+    res.send({ userJoin: userJoin });
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({ error: error });
+  }
+}

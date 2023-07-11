@@ -1,7 +1,8 @@
 import express from "express";
 import { addEvent,
      getUserEvents, getAllEvents,
-    //  addUserToGameNight, checkIfUserCanJoinGame
+    //  addUserToGameNight, 
+    checkIfUserCanJoinGame
      } from "./gameNightsCont";
 import db from "../../DB/database";
 
@@ -12,7 +13,7 @@ router
 .post("/add-event", addEvent)
 .post("/get-user-events", getUserEvents)
 // .post("/add-user-to-game-night", addUserToGameNight)
-// .post("/check-if-user-can-join-game", checkIfUserCanJoinGame)
+.post("/check-if-user-can-join-game", checkIfUserCanJoinGame)
 
 
 export default router;
