@@ -117,7 +117,6 @@ export async function addGameToUser(
   res: express.Response
 ) {
   try {
-
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("Couldn't load secret from .env");
     const { userID } = req.cookies;
@@ -130,13 +129,15 @@ export async function addGameToUser(
     if (!userId || !name)
       throw new Error("no loggedInUser or name from client on addGameToUser");
 
-    const gameDB = await GameModel.findOne({gameName: name})
-    if(!gameDB) throw new Error("no game found with this name")
+    const gameDB = await GameModel.findOne({ gameName: name });
+    if (!gameDB) throw new Error("no game found with this name");
 
-    const userGameDB = await UserGameModel.create({gameId: gameDB._id, userId})
+    const userGameDB = await UserGameModel.create({
+      gameId: gameDB._id,
+      userId,
+    });
 
     res.send({ results: userGameDB });
-    
   } catch (error) {
     res.status(500).send({ error: error });
   }
@@ -154,44 +155,37 @@ export async function getAllGames(req: express.Request, res: express.Response) {
     const { userID } = decodedUserId;
     if (!userId || !userID)
       throw new Error("no loggedInUser from client on get all games");
-    const query = `SELECT *
-    FROM gamenight.games as g;
-    SELECT g.game_name, g.game_img, g.game_id
-    FROM games as g
-    JOIN users_games as ug ON g.game_id = ug.game_id
-    JOIN users as u ON u.user_id = ug.user_owner_id
-    WHERE u.user_id = "${userID}";`;
 
-    db.query(query, [1,2], (err, results, fields) => {
-      try {
-        if (err) throw err;
-        const gamesArray = [];
-        results[0].map((result) => {
+    const [gamesDB, userGameDB] = await Promise.all([
+      GameModel.find(),
+      UserGameModel.find({
+        userId,
+      }),
+    ]);
 
-          if (results[1].some(e => e.game_id === result.game_id)) {
-            gamesArray.push({
-              game_name: result.game_name,
-              game_img: result.game_img,
-              game_id: result.game_id,
-              gameAddble: false,
-            });}
-           else {
-            gamesArray.push({
-              game_name: result.game_name,
-              game_img: result.game_img,
-              game_id: result.game_id,
-              gameAddble: true,
-            });
-          }
+    const gamesArray: any[] = [];
+    gamesDB.map((result) => {
+      //@ts-ignore
+      if (userGameDB.some((e) => e.gameId === result._Id)) {
+        gamesArray.push({
+          gameName: result.gameName,
+          gameImg: result.gameImg,
+          gameId: result._id,
+          gameAddble: false,
         });
-        res.send({ gamesArray });
-      } catch (error) {
-        console.log(err, error);
-        res.status(500).send({ ok: false, error: err, error2: error });
+      } else {
+        gamesArray.push({
+          gameName: result.gameName,
+          gameImg: result.gameImg,
+          gameId: result._id,
+          gameAddble: true,
+        });
       }
     });
+
+    res.send({ gamesArray });
   } catch (error) {
-    console.log( error);
+    console.log(error);
 
     res.status(500).send({ error: error });
   }
