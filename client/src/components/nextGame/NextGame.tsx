@@ -32,7 +32,7 @@ export const NextGame = () => {
       if (userEvents.length === 0) {
         setNextEvent("No event Found");
       }
-      console.log(userEvents);
+      // console.log(userEvents);
       const today = new Date();
       for (let i = 0; i < userEvents.length; i++) {
         const eventOfUser = new Date(userEvents[i].start);
@@ -49,8 +49,10 @@ export const NextGame = () => {
                 if (eventOfUser.getDate() === today.getDate()) {
                   // console.log("today");
                   setNextEvent(eventOfUser)
+                  return
                 } else if (eventOfUser.getDate() > today.getDate()) {
                   setNextEvent(eventOfUser)
+                  return
                 }
               } else if (eventOfUser.getMonth() > today.getMonth()) {
                 console.log("future date");
@@ -79,6 +81,7 @@ export const NextGame = () => {
                 } else if (eventOfUser.getDate() > today.getDate()) {
                   setNextEvent(eventOfUser);
                   SetNextEventData(userEvents[i]);
+                  
                 }
               }
             } else {
