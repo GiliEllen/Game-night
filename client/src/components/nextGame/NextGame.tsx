@@ -8,7 +8,7 @@ import { login } from "./../../features/loggedInUser/userAPI";
 export const NextGame = () => {
   const dispatch = useAppDispatch();
   const loggedInUser = useAppSelector(userSelector);
-  const userId = loggedInUser?.user_id;
+  const userId = loggedInUser?._id;
   const [events, setEvents] = useState([]);
   const [nextEvent, setNextEvent] = useState<Date | string>();
   const [nextEventData, SetNextEventData] = useState({

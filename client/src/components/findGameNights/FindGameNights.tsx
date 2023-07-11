@@ -11,15 +11,20 @@ import GameNightCard from "./gameNightCard/GameNightCard";
 
 interface allEventsModel {
   date: Date;
-  spots_available: number;
-  location_city: string;
-  location_address: string;
-  game_name: string;
-  game_img: string;
-  first_name: string;
-  last_name: string;
-  user_host_id: number;
-  game_events_id: number;
+  spotsAvailable: number;
+  city: string;
+  address: string;
+  gameId: {
+    gameName: string;
+    gameImg: string;
+  },
+  hostId: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+  }
+  
+  _id: number;
 }
 
 export const FindGameNights = () => {
@@ -51,7 +56,7 @@ export const FindGameNights = () => {
         <div className="container_cards">
           {allEvents.map((event, idx) => {
             let userHost;
-            if (loggedInUser?.user_id === event.user_host_id) {
+            if (loggedInUser?._id === event.hostId._id) {
               userHost = true;
             } else {
               userHost = false;
@@ -59,17 +64,17 @@ export const FindGameNights = () => {
           
               return (
                 <GameNightCard
-                  key={idx}
-                  GameName={event.game_name}
+                  key={idx} //@ts-ignore
+                  GameName={event.gameId.gameName}
                   playingOn={event.date}
-                  playingIn={event.location_city}
-                  address={event.location_address}
-                  hostedByname={event.first_name}
-                  hostedBylastName={event.last_name}
-                  spots={event.spots_available}
+                  playingIn={event.city}
+                  address={event.address}
+                  hostedByname={event.hostId.firstName}
+                  hostedBylastName={event.hostId.lastName}
+                  spots={event.spotsAvailable}
                   userHost={userHost}
-                  gameEventId={event.game_events_id}
-                  game_img={event.game_img}
+                  gameEventId={event._id}
+                  game_img={event.gameId.gameImg}
                 />
               );
             }

@@ -65,7 +65,7 @@ export const GameNightRow: FC<GameNightRowProps> = ({
 
   async function handleAddUserToGameEvent() {
     try {
-      const userId = loggedInUser?.user_id;
+      const userId = loggedInUser?._id;
       const { data } = await axios.post(
         "/api/game-nights/add-user-to-game-night",
         { userId, gameEventId }
@@ -81,7 +81,7 @@ export const GameNightRow: FC<GameNightRowProps> = ({
 
   async function canUserJoinGame() {
     try {
-      const userId = loggedInUser?.user_id;
+      const userId = loggedInUser?._id;
       const { data } = await axios.post(
         "/api/game-nights/check-if-user-can-join-game",
         { gameEventId, userId }

@@ -52,76 +52,78 @@ export async function addEvent(req: express.Request, res: express.Response) {
   }
 }
 
-// export async function getUserEvents(
-//   req: express.Request,
-//   res: express.Response
-// ) {
-//   try {
-//     const secret = process.env.JWT_SECRET;
-//     if (!secret) throw new Error("Couldn't load secret from .env");
+export async function getUserEvents(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) throw new Error("Couldn't load secret from .env");
 
-//     const { userID } = req.cookies;
-//     if (!userID) throw new Error("no userId found");
-//     if (userID === undefined) throw new Error("no user");
+    const { userID } = req.cookies;
+    if (!userID) throw new Error("no userId found");
+    if (userID === undefined) throw new Error("no user");
 
-//     const decodedUserId = jwt.decode(userID, secret);
-//     const { userId } = decodedUserId;
+    const decodedUserId = jwt.decode(userID, secret);
+    const { userId } = decodedUserId;
 
-//     const [gamesNightsHostDB, gamesNightsAtendeeDB] = await Promise.all([
-//       GameNightModel.find({ hostId: userId }),
-//       GameNightSpotsModel.find({
-//         userAtendeeId: userId,
-//       }),
-//     ]);
+    const [gamesNightsHostDB, gamesNightsAtendeeDB] = await Promise.all([
+      GameNightModel.find({ hostId: userId }).populate(["hostId", "gameId"]),
+      GameNightSpotsModel.find({
+        userAtendeeId: userId,
+      }).populate(["gameNightId", "userAtendeeId", "hostId", "gameId"]),
+    ]);
 
-//     const userEvents: any[] = [];
+    const userEvents: any[] = [];
 
-//     gamesNightsHostDB.forEach((result) => {
-//       userEvents.push({
-//         id: result._id,
-//         title: result.gameName,
-//         start: result.date,
-//         description: `You will play ${result.game_name} at ${result.location_city}, ${result.location_address}, hosted by You.`,
-//       });
-//     });
+    gamesNightsHostDB.forEach((result) => {
+      userEvents.push({
+        id: result._id, //@ts-ignore
+        title: result.gameId?.gameName,
+        start: result.date, //@ts-ignore
+        description: `You will play ${result.gameId?.gameName} at ${result.city}, ${result.address}, hosted by You.`,
+      });
+    });
 
-//     results[1].forEach((result) => {
-//       userEvents.push({
-//         id: result.game_events_id,
-//         title: result.game_name,
-//         start: result.date,
-//         description: `You will play ${result.game_name} at ${result.location_city}, ${result.location_address}`,
-//       });
-//     });
-//     res.send({ userEvents });
+    gamesNightsAtendeeDB.forEach((result) => {
+      userEvents.push({
+        id: result._id, //@ts-ignore
+        title: result.gameNightId?.gameId.gameName,//@ts-ignore
+        start: result.gameNightId?.date, //@ts-ignore
+        description: `You will play ${result.gameNightId?.gameId.gameName} at ${result.result.gameNightId?.city}, ${result.result.gameNightId?.ddress}`,
+      });
+    });
+    res.send({ userEvents });
 
-//     const query = `SELECT * FROM gamenight.game_events as ge
-//     JOIN gamenight.games as g
-//     ON ge.game_id = g.game_id AND ge.user_host_id = ${userID}
-//     ;
-//     SELECT * from game_events
-//     JOIN games
-//     WHERE games.game_id = game_events.game_id
-//     AND game_events.game_events_id IN (
-//       SELECT game_event_id
-//         FROM game_events_spots
-//         WHERE user_atendee_id = '${userID}'
-//     );`;
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({ error: error });
-//   }
-// }
+    // const query = `SELECT * FROM gamenight.game_events as ge
+    // JOIN gamenight.games as g
+    // ON ge.game_id = g.game_id AND ge.user_host_id = ${userID}
+    // ;
+    // SELECT * from game_events
+    // JOIN games
+    // WHERE games.game_id = game_events.game_id
+    // AND game_events.game_events_id IN (
+    //   SELECT game_event_id
+    //     FROM game_events_spots
+    //     WHERE user_atendee_id = '${userID}'
+    // );`;
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: error });
+  }
+}
 
 export async function getAllEvents(
   req: express.Request,
   res: express.Response
 ) {
   try {
-    const eventsDB = await GameNightModel.find({}).populate([
+    const eventsDB = await GameNightModel.find()
+    .populate([
       "gameId",
       "hostId",
     ]);
+
 
     res.send({ results: eventsDB });
   } catch (error: any) {

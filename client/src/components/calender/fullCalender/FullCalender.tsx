@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export const FullCalenderReact = () => {
   const loggedInUser = useAppSelector(userSelector);
-  const userId = loggedInUser?.user_id;
+  const userId = loggedInUser?._id;
   const [events, setEvents] = useState([]);
 
   useEffect(() => {

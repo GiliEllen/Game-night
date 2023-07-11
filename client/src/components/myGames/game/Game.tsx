@@ -12,7 +12,7 @@ interface GameProps {
 const Game: FC<GameProps> = ({ name, img, addable }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const loggedInUser = useAppSelector(userSelector);
-  const userId = loggedInUser?.user_id;
+  const userId = loggedInUser?._id;
 
   async function handleAddGameToList(ev: any) {
     try {

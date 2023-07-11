@@ -12,7 +12,7 @@ import { userSelector } from "../../features/loggedInUser/loggedInUser";
 function FindGames() {
   const loggedInUser = useAppSelector(userSelector);
   const [allGamesArray, setAllgamesArray] = useState<GameModel[]>([]);
-  const userId = loggedInUser?.user_id;
+  const userId = loggedInUser?._id;
   async function getAllGames() {
     try {
       const { data } = await axios.post("/api/games/get-all-games-by-user", {
