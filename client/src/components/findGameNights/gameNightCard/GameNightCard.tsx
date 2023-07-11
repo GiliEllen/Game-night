@@ -83,9 +83,8 @@ const GameNightCard: FC<GameNightCardProps> = ({
         { userId, gameEventId }
       );
       const { results } = data;
-      if (results.affectedRows > 0) {
-        setDisabled(true);
-      }
+
+      setDisabled(true);
     } catch (error) {
       console.error(error);
     }
