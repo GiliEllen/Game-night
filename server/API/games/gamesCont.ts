@@ -23,8 +23,6 @@ export async function findGameByUser(
       "userId",
     ]);
 
-    console.log(userGamesDB)
-
     res.send({ results: userGamesDB });
   } catch (error) {
     res.status(500).send({ error: error });
@@ -50,13 +48,6 @@ export async function findGameByName(
 
     const regExpName = new RegExp(gameName, "i");
 
-    // const gamesDB = await GameModel.find({ gameName: regExpName });
-
-    // const userGameDB = await UserGameModel.find({
-    //   gameName: regExpName,
-    //   userId,
-    // });
-
     const [gamesDB, userGameDB] = await Promise.all([
       GameModel.find({ gameName: regExpName }),
       UserGameModel.find({
@@ -67,8 +58,11 @@ export async function findGameByName(
 
     const gamesArray: any[] = [];
     gamesDB.map((result) => {
-      //@ts-ignore
-      if (userGameDB.some((e) => e.gameId === result._Id)) {
+      if (
+        userGameDB.some(
+          (e) => e.gameId?._id?.toString() == result._id.toString()
+        )
+      ) {
         gamesArray.push({
           gameName: result.gameName,
           gameImg: result.gameImg,
@@ -162,7 +156,7 @@ export async function getAllGames(req: express.Request, res: express.Response) {
     const gamesArray: any[] = [];
     gamesDB.map((result) => {
       //@ts-ignore
-      if (userGameDB.some((e) => e.gameId === result._Id)) {
+      if (userGameDB.some((e) => e.gameId?._id?.toString() == result._id.toString())) {
         gamesArray.push({
           gameName: result.gameName,
           gameImg: result.gameImg,
