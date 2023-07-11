@@ -41,7 +41,8 @@ export const AddEvent = () => {
       const eventDateDay = date.getDate();
       const eventDateMonth = date.getMonth() + 1;
       const eventDateYear = date.getFullYear();
-      const userId = loggedInUser?.user_id;
+      //@ts-ignore
+      const userId = loggedInUser?._id;
       const eventTime = ev.target.eventTime.value;
       const eventLocationCity = ev.target.location.value;
       const eventLocationAddress = ev.target.address.value;
@@ -87,9 +88,8 @@ export const AddEvent = () => {
         <label htmlFor="gamesList">Choose from your games:</label>
         <select className="select" name="gamesList">
           {games.map((game, idx) => {
-            return (
-              <option className="options" key={idx} value={game.gameId}>
-                {game.gameName}
+            return ( //@ts-ignore
+              <option className="options" key={idx} value={game.gameId._id}> {game.gameId.gameName}
               </option>
             );
           })}
