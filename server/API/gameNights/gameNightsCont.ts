@@ -113,30 +113,22 @@ export async function addEvent(req: express.Request, res: express.Response) {
 //   }
 // }
 
-// export async function getAllEvents(
-//   req: express.Request,
-//   res: express.Response
-// ) {
-//   try {
-//     const query = `SELECT ge.game_events_id, ge.date, ge.spots_available, ge.location_city, ge.location_address, g.game_name, g.game_img, u.first_name, u.last_name, ge.user_host_id FROM gamenight.game_events as ge
-//   JOIN gamenight.games as g
-//   ON ge.game_id = g.game_id
-//   JOIN gamenight.users as u
-//   ON ge.user_host_id = u.user_id`;
-//     db.query(query, (err, results, fields) => {
-//       try {
-//         if (err) throw err;
-//         res.send({ results });
-//       } catch (error) {
-//         console.log(err);
-//         res.status(500).send({ ok: false, error: err });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({ error: error });
-//   }
-// }
+export async function getAllEvents(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const eventsDB = await GameNightModel.find({}).populate([
+      "gameId",
+      "hostId",
+    ]);
+
+    res.send({ results: eventsDB });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send({ error: error });
+  }
+}
 
 export async function addUserToGameNight(
   req: express.Request,
