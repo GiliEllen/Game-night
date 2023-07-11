@@ -126,6 +126,27 @@ export async function getAllEvents(
     res.status(500).send({ error: error });
   }
 }
+export async function getEventById(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const { eventId } = req.params;
+    if (!eventId)
+      throw new Error("no event Id on getEventById at gamenighctrl");
+    const eventDB = await GameNightModel.findById(eventId).populate([
+      "gameId",
+      "hostId",
+    ]);
+
+    if (!eventDB) throw new Error("no event found on getEventById at gamenighctrl")
+
+    res.send({ ok: true, eventDB });
+  } catch (error: any) {
+    console.log(error);
+    res.status(500).send({ error: error });
+  }
+}
 
 export async function addUserToGameNight(
   req: express.Request,
@@ -189,8 +210,7 @@ export async function checkIfUserCanJoinGame(
 
     res.send({ userJoin: userJoin });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({ error: error });
   }
 }
-

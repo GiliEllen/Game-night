@@ -16,7 +16,6 @@ function MyGameNights() {
         <NextGame />
       </div>
       <div className="main main_calendar">
-        <div>calnder for game nights</div>
         <FullCalenderReact />
       </div>
 
