@@ -3,40 +3,28 @@ import db from "../../DB/database";
 import jwt from "jwt-simple";
 import GameModel, { UserGameModel } from "./gameModel";
 
-// export async function findGameByUser(
-//   req: express.Request,
-//   res: express.Response
-// ) {
-//   try {
-//     const secret = process.env.JWT_SECRET;
-//     if (!secret) throw new Error("Couldn't load secret from .env");
+export async function findGameByUser(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) throw new Error("Couldn't load secret from .env");
 
-//     const { userId } = req.cookies;
-//     if (!userId) throw new Error("no userId found");
-//     if (userId === undefined) throw new Error("no user");
+    const { userID } = req.cookies;
+    if (!userID) throw new Error("no userId found");
+    if (userID === undefined) throw new Error("no user");
 
-//     const decodedUserId = jwt.decode(userId, secret);
-//             const { userID } = decodedUserId;
+    const decodedUserId = jwt.decode(userID, secret);
+            const { userId } = decodedUserId;
 
-//     const query = `SELECT g.game_name, g.game_img, g.game_id
-//     FROM games as g
-//     JOIN users_games as ug ON g.game_id = ug.game_id
-//     JOIN users as u ON u.user_id = ug.user_owner_id
-//     WHERE u.user_id = "${userID}";`;
+    const userGamesDB = UserGameModel.find({userId})
 
-//     db.query(query, (err, results, fields) => {
-//       try {
-//         if (err) throw err;
-//         res.send({ results });
-//       } catch (error) {
-//         console.log(err);
-//         res.status(500).send({ ok: false, error: err });
-//       }
-//     });
-//   } catch (error) {
-//     res.status(500).send({ error: error });
-//   }
-// }
+    res.send({ results: userGamesDB });
+  } catch (error) {
+    res.status(500).send({ error: error });
+  }
+}
 
 export async function findGameByName(
   req: express.Request,
