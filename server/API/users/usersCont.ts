@@ -40,7 +40,7 @@ export async function register(req: express.Request, res: express.Response) {
 
     res.cookie("userID", JWTCookie);
     res.send({ ok: true, message: userDB });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).send({ notOK: error });
   }
 }
@@ -66,12 +66,12 @@ export async function login(req: express.Request, res: express.Response) {
     userDB.password = undefined;
     res.cookie("userID", JWTCookie);
     res.send({ login: true, userDB });
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).send({ notOK: error });
   }
 }
 
-export const getUserByCookie = async (req, res) => {
+export const getUserByCookie = async (req: express.Request, res: express.Response) => {
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("Couldn't load secret from .env");
@@ -87,7 +87,7 @@ export const getUserByCookie = async (req, res) => {
       throw new Error(`Couldn't find user id with the id: ${userId}`);
     userDB.password = undefined;
     res.send({ userDB });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
     res.status(500).send({ error: error.message });
   }
