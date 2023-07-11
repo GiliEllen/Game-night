@@ -1,0 +1,16 @@
+.main_calendar {
+    background-color: var(--backgroundColor);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border-radius: 0 12px 12px 0;
+}
+
+.dashboard_img {
+    background-image: url("../../images/2002.i109.024.people-playing-board-games-isometric-set-Converted.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 500px;
+}

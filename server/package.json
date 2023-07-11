@@ -1,0 +1,39 @@
+{
+  "name": "dnd-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GiliEllen/DnD-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GiliEllen/DnD-Project/issues"
+  },
+  "homepage": "https://github.com/GiliEllen/DnD-Project#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "joi": "^17.6.1",
+    "joi-password": "^4.0.0",
+    "jwt-simple": "^0.5.6",
+    "mongoose": "^6.11.2",
+    "nodemon": "^2.0.20",
+    "react-router-dom": "^6.4.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}

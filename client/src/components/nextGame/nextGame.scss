@@ -1,0 +1,22 @@
+.next_event {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    &__header {
+            margin: 0;
+            font-family: 'Fredoka One', cursive;
+            margin-top: 12px;
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: var(--backgroundColor);
+        margin: 12px;
+        border-radius: 12px;
+        padding: 12px;
+    }
+}

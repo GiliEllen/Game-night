@@ -1,0 +1,114 @@
+@import "./features/register/register.scss";
+@import "./features/login/login.scss";
+@import"./components/header/header.scss";
+@import "./components/navbar/navbar.scss";
+@import "./features/homePage/homePage.scss";
+@import "./components/nextGame/nextGame.scss";
+@import "./components/dashboard/dashboard.scss";
+@import "./components/myGameNight/myGameNight.scss";
+@import "./components/myGames/game/game.scss";
+@import "./components/findGameNights/findGameNight.scss";
+
+
+:root {
+    --backgroundColor: #F7F7F5;
+    --divBackgroundColor: #BCECE5;
+    --divBackgroundColorOnHover: #a0d8cf;
+    --borderRadius: 12px 12px 12px 12px;
+    --borderColor: #71CCBD;
+    --button-main-color: #9877A9;
+    --button-main-border-color: #611F38;
+    --fontColorOnMain: #00201D;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+}
+
+.button_main {
+    background-color: var(--button-main-color);
+    border: 1px solid var(--button-main-border-color);
+    border-radius: 50px;
+    padding: 20px 40px;
+    color: #F7F7F5;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.button_add {
+    background-color: var(--button-main-color);
+    border: 1px solid var(--button-main-border-color);
+    border-radius: 50px;
+    padding: 15px 30px;
+    color: #F7F7F5;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL'0,
+        'wght'400,
+        'GRAD'0,
+        'opsz'48
+}
+
+body {
+    overflow: hidden;
+}
+
+.page {
+    overflow: hidden;
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "header header header header header header "
+        "navBar main main main top_section top_section"
+        "navBar main main main top_section top_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section"
+        "navBar main main main bottom_section bottom_section";
+}
+
+.header_grid {
+    grid-area: header;
+}
+
+.navBar {
+    grid-area: navBar;
+}
+
+.main {
+    grid-area: main;
+}
+
+.top_section {
+    grid-area: top_section;
+}
+
+.bottom_section {
+    grid-area: bottom_section;
+}
+
+.full_page {
+    grid-area: 2 / 2 / 11 /11;
+    overflow-y: scroll;
+
+    .container_cards {
+        height: max-content;
+        overflow-y: scroll;
+    }
+}

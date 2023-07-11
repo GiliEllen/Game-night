@@ -1,0 +1,23 @@
+.navbar {
+    background-color: var(--divBackgroundColor);
+    grid-area: navBar;
+    &__link_continer {
+        height: 50vh;
+        display: flex;
+        flex-direction: column;
+        
+        font-size: 1.2rem;
+        
+        a {
+            padding: 30px 12px;
+            border-bottom: 2px solid var(--borderColor);
+            text-decoration: none;
+            color: var(--fontColorOnMain);
+
+            &:hover {
+                background-color: var(--divBackgroundColorOnHover);
+            }
+        }
+    }
+   
+}
