@@ -37,17 +37,20 @@ export const NextGame = () => {
       for (let i = 0; i < userEvents.length; i++) {
         const eventOfUser = new Date(userEvents[i].start);
         if (eventOfUser.getFullYear() >= today.getFullYear()) {
-          console.log("this year or neext");
+          // console.log("this year or neext");
           if (eventOfUser.getFullYear() === today.getFullYear()) {
-            console.log("this year");
+            // console.log("this year");
             if (eventOfUser.getMonth() < today.getMonth()) {
-              console.log("this is a past date");
+              // console.log("this is a past date");
             } else if (eventOfUser.getMonth() >= today.getMonth()) {
-              console.log("this or next month");
+              // console.log("this or next month");
               if (eventOfUser.getMonth() === today.getMonth()) {
-                console.log("same month");
+                // console.log("same month");
                 if (eventOfUser.getDate() === today.getDate()) {
-                  console.log("today");
+                  // console.log("today");
+                  setNextEvent(eventOfUser)
+                } else if (eventOfUser.getDate() > today.getDate()) {
+                  setNextEvent(eventOfUser)
                 }
               } else if (eventOfUser.getMonth() > today.getMonth()) {
                 console.log("future date");
