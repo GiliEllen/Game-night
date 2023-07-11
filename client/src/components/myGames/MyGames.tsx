@@ -5,18 +5,28 @@ import Header from "./../header/Header";
 import NavBar from "./../navbar/NavBar";
 import axios from "axios";
 import Game from "./game/Game";
-import AddNewGame from './addNewGame/AddNewGame';
+import AddNewGame from "./addNewGame/AddNewGame";
 
 export interface GameModel {
   gameName: string;
-  gameImg: string,
-  gameId:number,
-  gameAddble?: boolean
+  gameImg: string;
+  gameId: string;
+  gameAddble?: boolean;
+}
+
+export interface UserGame {
+  gameId: {
+    gameName: string;
+    gameImg: string;
+    _id: string
+  };
+  userId: any;
+  gameAddble?: boolean;
 }
 
 function MyGames() {
   const loggedInUser = useAppSelector(userSelector);
-  const [games, setGames] = useState<GameModel[]>([]);
+  const [games, setGames] = useState<UserGame[]>([]);
 
   useEffect(() => {
     getUserGames();
@@ -41,14 +51,25 @@ function MyGames() {
       <div className="main">
         <h1>my game list</h1>
         <div className="user_games">
-          {games.map((game, idx) => { //@ts-ignore
-            return <Game key={idx} name={game.gameId.gameName} img={game.gameId.gameImg} addable={false}/>;
+          {games.map((game, idx) => {
+            //@ts-ignore
+            return (
+              <Game
+                key={idx}
+                name={game.gameId.gameName}
+                img={game.gameId.gameImg}
+                gameId={game.gameId._id}
+                addable={false}
+                setGames={setGames}
+                games={games}
+              />
+            );
           })}
         </div>
       </div>
       <div className="bottom_section">
         <h1>Add New Game</h1>
-        <AddNewGame userGames={games}/>
+        <AddNewGame userGames={games} />
       </div>
     </div>
   );

@@ -4,7 +4,8 @@ import {
      findGameByName,
       addGame,
        addGameToUser,
-     getAllGames 
+     getAllGames,
+     deleteGameFromUserGames
     } from "./gamesCont";
 
 
@@ -16,5 +17,6 @@ router
 .post("/find-game-by-name", findGameByName)
 .post("/Add-New-Game", addGame)
 .post("/add-game-to-user", addGameToUser)
+.delete("/:gameId/user/:userId", deleteGameFromUserGames);
 
 export default router;

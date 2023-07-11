@@ -70,6 +70,7 @@
         align-items: center;
         padding-left: 12px;   
         width: 50vw;
+        position: relative;
 
         h2 {
             padding-left: 12px;
@@ -123,4 +124,14 @@
             }
         }
     }
+}
+
+.button_icon {
+    border: none;
+    background-color: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: 900;
+    background-color: inherit;
 }

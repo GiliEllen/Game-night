@@ -156,7 +156,11 @@ export async function getAllGames(req: express.Request, res: express.Response) {
     const gamesArray: any[] = [];
     gamesDB.map((result) => {
       //@ts-ignore
-      if (userGameDB.some((e) => e.gameId?._id?.toString() == result._id.toString())) {
+      if (
+        userGameDB.some(
+          (e) => e.gameId?._id?.toString() == result._id.toString()
+        )
+      ) {
         gamesArray.push({
           gameName: result.gameName,
           gameImg: result.gameImg,
@@ -178,5 +182,25 @@ export async function getAllGames(req: express.Request, res: express.Response) {
     console.log(error);
 
     res.status(500).send({ error: error });
+  }
+}
+
+export async function deleteGameFromUserGames(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const { userId, gameId } = req.params;
+    if (!userId || !gameId)
+      throw new Error(
+        "no userId or gameId from params im deleteGameFromUserGames at gameNightCtrl"
+      );
+
+    const userGame = await UserGameModel.findOneAndDelete({ userId, gameId });
+    if (!userGame) throw new Error("no game was deleted");
+
+    res.send({ok: true, userGame });
+  } catch (error: any) {
+    res.status(500).send({ eror: error.message });
   }
 }
