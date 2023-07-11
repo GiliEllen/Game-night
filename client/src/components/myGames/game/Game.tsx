@@ -21,13 +21,11 @@ const Game: FC<GameProps> = ({ name, img, addable }) => {
         userId,
       });
       const { results } = data;
-      if (results.affectedRows > 0) {
+
         console.log("game added good!");
         setDisabled(true);
-        window.location.reload();
-      } else {
-        console.log("did not work");
-      }
+        // window.location.reload();
+
     } catch (error) {
       console.error(error);
     }

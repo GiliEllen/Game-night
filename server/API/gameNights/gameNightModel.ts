@@ -1,10 +1,16 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import GameModel from "../games/gameModel";
+import UserModel from "../users/usersModel";
 
 const GameNightSchema = new mongoose.Schema({
     date: String,
     spotsAvaliable: Number,
-    gameId: String,
-    hostId: String,
+    gameId: {
+      type: Schema.Types.ObjectId, ref: GameModel
+    },
+    hostId: {
+      type: Schema.Types.ObjectId, ref: UserModel
+    },
     city: String,
     address: String,
     canUserJoin: Boolean
@@ -15,8 +21,12 @@ const GameNightSchema = new mongoose.Schema({
   export default GameNightModel;
 
   const GameNightSpotsSchema = new mongoose.Schema({
-    gameNightId: String,
-    userAtendeeId: String,
+    gameNightId: {
+      type: Schema.Types.ObjectId, ref: GameNightModel
+    },
+    userAtendeeId: {
+      type: Schema.Types.ObjectId, ref: UserModel
+    }
   });
   
   export const GameNightSpotsModel = mongoose.model("gamenightspots", GameNightSpotsSchema);

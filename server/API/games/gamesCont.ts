@@ -16,9 +16,14 @@ export async function findGameByUser(
     if (userID === undefined) throw new Error("no user");
 
     const decodedUserId = jwt.decode(userID, secret);
-            const { userId } = decodedUserId;
+    const { userId } = decodedUserId;
 
-    const userGamesDB = UserGameModel.find({userId})
+    const userGamesDB = await UserGameModel.find({ userId }).populate([
+      "gameId",
+      "userId",
+    ]);
+
+    console.log(userGamesDB)
 
     res.send({ results: userGamesDB });
   } catch (error) {
@@ -33,6 +38,7 @@ export async function findGameByName(
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("Couldn't load secret from .env");
+
     const { userID } = req.cookies;
     if (!userID) throw new Error("no userId found");
     if (userID === undefined) throw new Error("no user");
@@ -56,7 +62,7 @@ export async function findGameByName(
       UserGameModel.find({
         gameName: regExpName,
         userId,
-      }),
+      }).populate(["gameId", "userId"]),
     ]);
 
     const gamesArray: any[] = [];
@@ -114,6 +120,7 @@ export async function addGameToUser(
     const decodedUserId = jwt.decode(userID, secret);
     const { userId } = decodedUserId;
     const { name } = req.body;
+
     if (!userId || !name)
       throw new Error("no loggedInUser or name from client on addGameToUser");
 
@@ -135,12 +142,13 @@ export async function getAllGames(req: express.Request, res: express.Response) {
   try {
     const secret = process.env.JWT_SECRET;
     if (!secret) throw new Error("Couldn't load secret from .env");
-    const { userId } = req.cookies;
-    if (!userId) throw new Error("no userId found");
-    if (userId === undefined) throw new Error("no user");
+    const { userID } = req.cookies;
 
-    const decodedUserId = jwt.decode(userId, secret);
-    const { userID } = decodedUserId;
+    if (!userID) throw new Error("no userId found");
+    if (userID === undefined) throw new Error("no user");
+
+    const decodedUserId = jwt.decode(userID, secret);
+    const { userId } = decodedUserId;
     if (!userId || !userID)
       throw new Error("no loggedInUser from client on get all games");
 
@@ -148,7 +156,7 @@ export async function getAllGames(req: express.Request, res: express.Response) {
       GameModel.find(),
       UserGameModel.find({
         userId,
-      }),
+      }).populate(["gameId", "userId"]),
     ]);
 
     const gamesArray: any[] = [];

@@ -38,8 +38,8 @@ function FindGames() {
           return (
             <Game
               key={idx}
-              name={game.game_name}
-              img={game.game_img}
+              name={game.gameName}
+              img={game.gameImg}
               addable={game.gameAddble}
             />
           );

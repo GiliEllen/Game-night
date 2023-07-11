@@ -8,9 +8,9 @@ import Game from "./game/Game";
 import AddNewGame from './addNewGame/AddNewGame';
 
 export interface GameModel {
-  game_name: string;
-  game_img: string,
-  game_id:number,
+  gameName: string;
+  gameImg: string,
+  gameId:number,
   gameAddble?: boolean
 }
 
@@ -41,8 +41,8 @@ function MyGames() {
       <div className="main">
         <h1>my game list</h1>
         <div className="user_games">
-          {games.map((game, idx) => {
-            return <Game key={idx} name={game.game_name} img={game.game_img} addable={false}/>;
+          {games.map((game, idx) => { //@ts-ignore
+            return <Game key={idx} name={game.gameId.gameName} img={game.gameId.gameImg} addable={false}/>;
           })}
         </div>
       </div>

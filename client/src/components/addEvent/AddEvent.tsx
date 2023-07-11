@@ -88,8 +88,8 @@ export const AddEvent = () => {
         <select className="select" name="gamesList">
           {games.map((game, idx) => {
             return (
-              <option className="options" key={idx} value={game.game_id}>
-                {game.game_name}
+              <option className="options" key={idx} value={game.gameId}>
+                {game.gameName}
               </option>
             );
           })}
