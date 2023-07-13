@@ -15,11 +15,10 @@ export const Login = () => {
         password,
       });
       console.log(data);
-      const { userArray } = data;
 
-      if (userArray.length === 0) {
+      if (!data.login) {
         console.log("no user found");
-      } else if (userArray.length > 0) {
+      } else if (data.login) {
         console.log("user found!");
         navigate("/home");
       }
