@@ -13,6 +13,7 @@ export const FullCalenderReact = () => {
   const [events, setEvents] = useState([]);
   const [eventToEditInfo, setEventToEditInfo] = useState<any>();
   const [display, setdisplay] = useState<boolean>(false);
+  const [displayDelete, setDisplayDelete] = useState<boolean>(false);
   const [isUserHost, setIsUserHost] = useState<boolean>(false);
   const [eventToEdit, setEventToEdit] = useState<any>();
 
@@ -32,11 +33,9 @@ export const FullCalenderReact = () => {
     }
   };
   const handleDateClick = (arg: any) => {
-    // bind with an arrow function
     alert(arg.dateStr);
   };
   const handleEventClick = async (arg: any) => {
-    // bind with an arrow function
     console.log(arg.event._def);
     console.log(arg);
     setEventToEditInfo(arg.event._def);
@@ -70,6 +69,30 @@ export const FullCalenderReact = () => {
     setEventToEdit((prev: any) => {
       return { ...prev, [ev.target.id]: ev.target.value.toString() };
     });
+  };
+
+  const handleEditEvent = async () => {
+    try {
+      const { data } = await axios.patch(
+        `/api/game-nights/${eventToEdit._id}`,
+        { eventToEdit }
+      );
+      console.log(data);
+      setdisplay(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleDeleteEvent = async () => {
+    try {
+      const { data } = await axios.delete(
+        `/api/game-nights/${eventToEdit._id}`
+      );
+      console.log(data);
+      setdisplay(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -128,7 +151,7 @@ export const FullCalenderReact = () => {
           </form>
           <div className="btn-container">
             <button className="button_main">SAVE</button>
-            <button className="btn-delete">
+            <button className="btn-delete" onClick={(ev) => setDisplayDelete(true)}>
               <span className="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -138,6 +161,16 @@ export const FullCalenderReact = () => {
           <h3>Event Details</h3>
         </div>
       )}
+      {display && displayDelete ? (
+        <div>
+          <h4>Are you sure you want to delete this event?</h4>
+          <h4>This action is irreverseble.</h4>
+          <div>
+            <button className="button_main">YES</button>
+            <button className="button_main">NO</button>
+          </div>
+        </div>
+      ) : null}
       {!display ? (
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
