@@ -1,0 +1,74 @@
+.calender-form {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        margin: 0;
+        margin-top: 15px;
+    }
+
+    &__label {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 15px;
+
+        &__input,
+        input[type=text] {
+            font-family: 'Rubik', sans-serif;
+            width: 70%;
+            font-size: 20px;
+            border-radius: 6px;
+            line-height: 1.5;
+            padding: 5px 10px;
+            transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+            border: 2px solid #dee1e2;
+            color: rgb(14, 14, 16);
+            background: var(--backgroundColor);
+            display: block;
+            height: 3rem;
+
+            &:hover {
+                border-color: #ccc;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: #9147ff;
+                background: #fff;
+            }
+
+        }
+    }
+}
+
+.btn-delete {
+    border: none;
+    background-color: #d6d6d6;
+    padding: 10px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.btn-container {
+    display: flex;
+    gap: 5rem;
+}
+
+.edit-container {
+    position: relative;
+
+    .to-side {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 50px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
