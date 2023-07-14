@@ -107,6 +107,7 @@ export const FullCalenderReact = () => {
           <span
             onClick={(ev) => {
               setdisplay(false);
+              setDisplayDelete(false)
             }}
             className="material-symbols-outlined to-side"
           >
@@ -167,7 +168,7 @@ export const FullCalenderReact = () => {
           <h4>This action is irreverseble.</h4>
           <div>
             <button className="button_main">YES</button>
-            <button className="button_main">NO</button>
+            <button onClick={() => {setDisplayDelete(false)}} className="button_main">NO</button>
           </div>
         </div>
       ) : null}
