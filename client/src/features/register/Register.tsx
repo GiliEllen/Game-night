@@ -1,10 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  TextField,
+  InputAdornment,
+  IconButton,
+  Container,
+  Typography,
+  Box,
+} from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export const Register = () => {
   const navigate = useNavigate();
   const [registerError, setRegisterError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
   const [input, setInput] = useState({
     password: "",
     rePassword: "",
@@ -24,7 +36,7 @@ export const Register = () => {
     validateInput(e);
   }
 
-  function validateInput(e: React.ChangeEvent<HTMLInputElement>) {
+  function validateInput(e: any) {
     let { name, value } = e.target;
     setError((prev) => {
       const stateObj: any = { ...prev, [name]: "" };
@@ -73,60 +85,131 @@ export const Register = () => {
         password,
         rePassword,
       });
-      console.log(data);
-      const {message} = data;
+      const { ok } = data;
 
-      message.affectedRows ? navigate("/home") : setRegisterError(true)
-      
+      ok ? navigate("/home") : setRegisterError(true);
     } catch (error) {
       console.log(error);
     }
   };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowRePassword = () => setShowRePassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   return (
-    <div className="session">
-      <div className="session__form_container_register">
-        
-        <form className="form_container__form" onSubmit={handleRegister}>
-        <div className="session__form_container_register__header">
-          <h1>Welcome to Game Night!</h1>
-          <h3>Ready to play?</h3>
-        </div>
-          
-          <input type="text" name="first_name" placeholder="Enter Your name" />
-          <input
-            type="text"
-            name="last_name"
-            placeholder="Enter Your last name"
-          />
-          <input type="email" name="email" placeholder="Enter Your Email" />
-          <input
-            onBlur={validateInput}
-            onChange={onInputChange}
-            value={input.password}
-            type="password"
-            name="password"
-            placeholder="Enter Your Password"
-          />
-          {error.password && <span className="err">{error.password}</span>}
-          <input
-            value={input.rePassword}
-            onChange={onInputChange}
-            onBlur={validateInput}
-            type="password"
-            name="rePassword"
-            placeholder="Repeat Your Password"
-          />
-          {error.rePassword && <span className="err">{error.rePassword}</span>}
-          <button className="button_main" type="submit">
-            SIGN UP
-          </button>
-          <p>
-            already a member? <Link to="/login">click here to log in!</Link>{" "}
-          </p>
-          {registerError && <p>Could not register: please try again</p>}
-        </form>
-      </div>
-    </div>
+    <Box className="session" sx={{marginLeft: 0, margin: 0, width: "100vw"}}>
+      <Box className="form_container_back"></Box>
+      <Container sx={{margin: 0}}>
+        <Box sx={{ height: "100vh", width: "30vw" }}>
+          <form
+            style={{ height: "100%", width: "100%" }}
+            onSubmit={handleRegister}
+          >
+            <Box sx={{ height: "100%", width: "100%", paddingY: 15, display:"flex", flexDirection: "column", gap: 6 }}>
+              <Container>
+                <Typography variant="h3">Welcome to Game Night!</Typography>
+                <Typography variant="h5">Ready to play?</Typography>
+              </Container>
+
+              <TextField
+                name="first_name"
+                placeholder="Enter Your name"
+                label="First Name"
+                color="secondary"
+                sx={{backgroundColor: "white", borderRadius: 1}}
+              />
+              <TextField
+                name="last_name"
+                placeholder="Enter Your last name"
+                label="Last Name"
+                color="secondary"
+                sx={{backgroundColor: "white", borderRadius: 1}}
+              />
+              <TextField
+                color="secondary"
+                label="email"
+                type="email"
+                name="email"
+                placeholder="Enter Your Email"
+                sx={{backgroundColor: "white", borderRadius: 1}}
+              />
+              <TextField
+                onBlur={validateInput}
+                onChange={onInputChange}
+                value={input.password}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter Your Password"
+                helperText={
+                  error.password && (
+                    <span className="err">{error.password}</span>
+                  )
+                }
+                color="secondary"
+                sx={{backgroundColor: "white", borderRadius: 1}}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                label="Password"
+              />
+              <TextField
+                value={input.rePassword}
+                onChange={onInputChange}
+                onBlur={validateInput}
+                type="password"
+                name="rePassword"
+                placeholder="Repeat Your Password"
+                helperText={
+                  error.rePassword && (
+                    <span className="err">{error.rePassword}</span>
+                  )
+                }
+                sx={{backgroundColor: "white", borderRadius: 1}}
+                label="Repeat Password"
+                color="secondary"
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowRePassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showRePassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <button className="button_main" type="submit">
+                SIGN UP
+              </button>
+              <p>
+                already a member? <Link to="/login">click here to log in!</Link>{" "}
+              </p>
+              {registerError && <p>Could not register: please try again</p>}
+            </Box>
+          </form>
+        </Box>
+      </Container>
+    </Box>
   );
 };
