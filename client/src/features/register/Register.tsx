@@ -8,6 +8,7 @@ import {
   Container,
   Typography,
   Box,
+  Button,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -209,9 +210,9 @@ export const Register = () => {
                   }}
                 />
 
-                <button className="button_main" type="submit">
+                <Button color="secondary" variant="contained" type="submit">
                   SIGN UP
-                </button>
+                </Button>
                 <p>
                   already a member?{" "}
                   <Link to="/login">click here to log in!</Link>{" "}
