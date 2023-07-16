@@ -8,6 +8,8 @@ import { login } from "./../../features/loggedInUser/userAPI";
 import { useAppDispatch } from "./../../app/hooks";
 import { useNavigate } from "react-router-dom";
 import { FC } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface AddEventProps {
   setEvents: CallableFunction;
@@ -64,10 +66,9 @@ export const AddEvent: FC<AddEventProps> = ({ setEvents }) => {
         userId,
       });
       const { results } = data;
-      setEvents((prev:any) => [...prev, results])
+      setEvents((prev: any) => [...prev, results]);
 
-      setAddedEvent(true);
-      navigate("/my-game-nights");
+      toast("Event Added successfully!");
     } catch (error) {
       console.error(error);
     }
@@ -106,6 +107,18 @@ export const AddEvent: FC<AddEventProps> = ({ setEvents }) => {
         </button>
         {addedevent && <p className="good">Event Added Successfully!</p>}
       </form>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
