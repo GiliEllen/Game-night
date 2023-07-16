@@ -5,7 +5,8 @@ import {
   getAllEvents,
   addUserToGameNight,
   checkIfUserCanJoinGame,
-  getEventById
+  getEventById,
+  deleteEventById
 
 } from "./gameNightsCont";
 import db from "../../DB/database";
@@ -19,6 +20,7 @@ router
   .post("/get-user-events", getUserEvents)
   .post("/add-user-to-game-night", addUserToGameNight)
   .post("/check-if-user-can-join-game", checkIfUserCanJoinGame)
+  .delete("/:eventId", deleteEventById)
 
 
 export default router;

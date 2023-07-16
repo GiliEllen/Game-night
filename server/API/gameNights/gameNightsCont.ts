@@ -139,7 +139,8 @@ export async function getEventById(
       "hostId",
     ]);
 
-    if (!eventDB) throw new Error("no event found on getEventById at gamenighctrl")
+    if (!eventDB)
+      throw new Error("no event found on getEventById at gamenighctrl");
 
     res.send({ ok: true, eventDB });
   } catch (error: any) {
@@ -209,6 +210,26 @@ export async function checkIfUserCanJoinGame(
     }
 
     res.send({ userJoin: userJoin });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: error });
+  }
+}
+
+export async function deleteEventById(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    const {eventId} = req.params
+    if(!eventId) throw new Error("no event Id on deleteEventById at gamenightCtrl")
+    const userIdToEmail = await GameNightSpotsModel.find({gameNightId: eventId})
+    const deleteEventSpots = await GameNightSpotsModel.deleteMany({gameNightId: eventId})
+
+    const eventDB = await GameNightModel.findByIdAndDelete(eventId);
+
+    res.send({ok: true})
+
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error });

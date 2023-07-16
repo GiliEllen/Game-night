@@ -6,6 +6,7 @@ import axios from "axios";
 import { useAppSelector } from "../../../app/hooks";
 import { userSelector } from "../../../features/loggedInUser/loggedInUser";
 import { useEffect } from "react";
+import { Paper, Typography, Box, Button } from "@mui/material";
 
 export const FullCalenderReact = () => {
   const loggedInUser = useAppSelector(userSelector);
@@ -89,7 +90,9 @@ export const FullCalenderReact = () => {
         `/api/game-nights/${eventToEdit._id}`
       );
       console.log(data);
+      setDisplayDelete(false)
       setdisplay(false);
+      handlegGetUserEvents()
     } catch (error) {
       console.error(error);
     }
@@ -100,14 +103,14 @@ export const FullCalenderReact = () => {
   }, [eventToEditInfo]);
 
   return (
-    <div>
+    <div style={{position: "relative"}}>
       {!display ? null : isUserHost ? (
         <div className="edit-container">
           <h3>Edit My Event</h3>
           <span
             onClick={(ev) => {
               setdisplay(false);
-              setDisplayDelete(false)
+              setDisplayDelete(false);
             }}
             className="material-symbols-outlined to-side"
           >
@@ -152,7 +155,10 @@ export const FullCalenderReact = () => {
           </form>
           <div className="btn-container">
             <button className="button_main">SAVE</button>
-            <button className="btn-delete" onClick={(ev) => setDisplayDelete(true)}>
+            <button
+              className="btn-delete"
+              onClick={(ev) => setDisplayDelete(true)}
+            >
               <span className="material-symbols-outlined">delete</span>
             </button>
           </div>
@@ -163,14 +169,36 @@ export const FullCalenderReact = () => {
         </div>
       )}
       {display && displayDelete ? (
-        <div>
-          <h4>Are you sure you want to delete this event?</h4>
-          <h4>This action is irreverseble.</h4>
-          <div>
-            <button className="button_main">YES</button>
-            <button onClick={() => {setDisplayDelete(false)}} className="button_main">NO</button>
-          </div>
-        </div>
+        <Paper sx={{position: "absolute", top: 0, left: 0, transform: "translate(50%, 50%)"}}>
+          <Typography sx={{ paddingTop: 5, paddingInline: 3 }} variant="h5">
+            Are you sure you want to delete this event?
+          </Typography>
+          <Typography sx={{ paddingY: 5, paddingInline: 3 }} variant="h5">
+            This action is irreverseble.
+          </Typography>
+          <Box
+            sx={{
+              width: "50%",
+              display: "flex",
+              justifyContent: "space-evenly",
+              margin: "auto",
+              paddingBottom: 5,
+            }}
+          >
+            <Button onClick={handleDeleteEvent} color="secondary" variant="contained">
+              YES
+            </Button>
+            <Button
+              onClick={() => {
+                setDisplayDelete(false);
+              }}
+              color="secondary"
+              variant="contained"
+            >
+              NO
+            </Button>
+          </Box>
+        </Paper>
       ) : null}
       {!display ? (
         <FullCalendar
