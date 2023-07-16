@@ -10,7 +10,7 @@ export const NextGame = () => {
   const loggedInUser = useAppSelector(userSelector);
   const userId = loggedInUser?._id;
   const [events, setEvents] = useState([]);
-  const [nextEvent, setNextEvent] = useState<Date | string>();
+  const [nextEvent, setNextEvent] = useState<Date | string>("No Event Found");
   const [nextEventData, SetNextEventData] = useState({
     id: "",
     title: "",
@@ -99,7 +99,7 @@ export const NextGame = () => {
       <h1 className="next_event__header">Next Event:</h1>
       <div className="next_event__card">
         <h2>{nextEventData.description}</h2>
-        <p> on {`${nextEvent}`}</p>
+        <p> {`${nextEvent}`}</p>
       </div>
     </div>
   );
