@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { userSelector } from "../../../features/loggedInUser/loggedInUser";
+import { useAppSelector } from "../../app/hooks";
+import { userSelector } from "../../features/loggedInUser/loggedInUser";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";

@@ -1,9 +1,9 @@
 import { ReactEventHandler, useEffect, useState, FC } from "react";
 import axios from "axios";
 import Game from "../game/Game";
-import { GameModel, UserGame } from "./../MyGames";
-import { useAppDispatch } from "./../../../app/hooks";
-import { login } from "./../../../features/loggedInUser/userAPI";
+import { GameModel, UserGame } from "../../views/myGames/MyGames";
+import { useAppDispatch } from "../../app/hooks";
+import { login } from "../../features/loggedInUser/userAPI";
 
 interface AddGamesProps {
   userGames: Array<UserGame>;

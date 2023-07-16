@@ -2,12 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { userSelector } from "../../features/loggedInUser/loggedInUser";
-import Header from "../header/Header";
-import NavBar from "./../navbar/NavBar";
-import { GameNightRow } from "./gameNightRow/GameNightRow";
-import { useAppDispatch } from "./../../app/hooks";
-import { login } from "./../../features/loggedInUser/userAPI";
-import GameNightCard from "./gameNightCard/GameNightCard";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import { GameNightRow } from "../../components/gameNightRow/GameNightRow";
+import { useAppDispatch } from "../../app/hooks";
+import { login } from "../../features/loggedInUser/userAPI";
+import GameNightCard from "../../components/gameNightCard/GameNightCard";
 
 interface allEventsModel {
   date: Date;
@@ -17,13 +17,13 @@ interface allEventsModel {
   gameId: {
     gameName: string;
     gameImg: string;
-  },
+  };
   hostId: {
     _id: string;
     firstName: string;
     lastName: string;
-  }
-  
+  };
+
   _id: number;
 }
 
@@ -61,24 +61,23 @@ export const FindGameNights = () => {
             } else {
               userHost = false;
             }
-          
-              return (
-                <GameNightCard
-                  key={idx} //@ts-ignore
-                  GameName={event.gameId.gameName}
-                  playingOn={event.date}
-                  playingIn={event.city}
-                  address={event.address}
-                  hostedByname={event.hostId.firstName}
-                  hostedBylastName={event.hostId.lastName}
-                  spots={event.spotsAvailable}
-                  userHost={userHost}
-                  gameEventId={event._id}
-                  game_img={event.gameId.gameImg}
-                />
-              );
-            }
-          )}
+
+            return (
+              <GameNightCard
+                key={idx} //@ts-ignore
+                GameName={event.gameId.gameName}
+                playingOn={event.date}
+                playingIn={event.city}
+                address={event.address}
+                hostedByname={event.hostId.firstName}
+                hostedBylastName={event.hostId.lastName}
+                spots={event.spotsAvailable}
+                userHost={userHost}
+                gameEventId={event._id}
+                game_img={event.gameId.gameImg}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

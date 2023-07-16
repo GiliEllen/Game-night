@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { FC, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { userSelector } from "../../../features/loggedInUser/loggedInUser";
-import { UserGame } from "../MyGames";
+import { useAppSelector } from "../../app/hooks";
+import { userSelector } from "../../features/loggedInUser/loggedInUser";
+import { UserGame } from "../../views/myGames/MyGames";
 
 interface GameProps {
   name: string;

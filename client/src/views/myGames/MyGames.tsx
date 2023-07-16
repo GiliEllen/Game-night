@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { userSelector } from "../../features/loggedInUser/loggedInUser";
-import Header from "./../header/Header";
-import NavBar from "./../navbar/NavBar";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
 import axios from "axios";
-import Game from "./game/Game";
-import AddNewGame from "./addNewGame/AddNewGame";
+import Game from "../../components/game/Game";
+import AddNewGame from "../../components/addNewGame/AddNewGame";
 
 export interface GameModel {
   gameName: string;
@@ -18,7 +18,7 @@ export interface UserGame {
   gameId: {
     gameName: string;
     gameImg: string;
-    _id: string
+    _id: string;
   };
   userId: any;
   gameAddble?: boolean;

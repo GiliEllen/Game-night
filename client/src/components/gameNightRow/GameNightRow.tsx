@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FC } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { userSelector } from "../../../features/loggedInUser/loggedInUser";
+import { useAppSelector } from "../../app/hooks";
+import { userSelector } from "../../features/loggedInUser/loggedInUser";
 
 interface GameNightRowProps {
   GameName: string;
@@ -44,22 +44,26 @@ export const GameNightRow: FC<GameNightRowProps> = ({
   }
   useEffect(() => {
     isEventPass();
-  },[])
+  }, []);
 
   function isEventPass() {
     try {
-      console.log("check event")
+      console.log("check event");
       const today = new Date();
-      if(day < today.getDate() && month < today.getMonth() +1) {
-        setDisabled(true)
-        console.log("event pass")
-      } else if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear() && hour < today.getHours()) {
-        setDisabled(true)
-        console.log("event pass")
-
+      if (day < today.getDate() && month < today.getMonth() + 1) {
+        setDisabled(true);
+        console.log("event pass");
+      } else if (
+        day === today.getDate() &&
+        month === today.getMonth() &&
+        year === today.getFullYear() &&
+        hour < today.getHours()
+      ) {
+        setDisabled(true);
+        console.log("event pass");
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   }
 
@@ -88,8 +92,8 @@ export const GameNightRow: FC<GameNightRowProps> = ({
       );
       const { userJoin } = data;
       setGameJoinable(userJoin);
-      if(!userJoin) {
-        setDisabled(true)
+      if (!userJoin) {
+        setDisabled(true);
       }
     } catch (error) {
       console.error(error);
@@ -97,10 +101,10 @@ export const GameNightRow: FC<GameNightRowProps> = ({
   }
 
   function button() {
-    if(userHost === true) {
-      setDisabled(true)
+    if (userHost === true) {
+      setDisabled(true);
     } else if (gameJoinable === false) {
-      setDisabled(true)
+      setDisabled(true);
     }
   }
 
@@ -112,7 +116,7 @@ export const GameNightRow: FC<GameNightRowProps> = ({
   return (
     <tr>
       <td>{GameName}</td>
-      <td>{`${day}.${month +1}.${year} at ${hour}:${minutesFinal}`}</td>
+      <td>{`${day}.${month + 1}.${year} at ${hour}:${minutesFinal}`}</td>
       <td>{playingIn}</td>
       <td>{address}</td>
       <td>

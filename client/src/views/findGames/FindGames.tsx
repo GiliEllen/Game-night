@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "./../header/Header";
-import NavBar from "./../navbar/NavBar";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { GameModel } from "./../myGames/MyGames";
-import Game from "./../myGames/game/Game";
+import { GameModel } from "../myGames/MyGames";
+import Game from "../../components/game/Game";
 import { useAppSelector } from "../../app/hooks";
 import { userSelector } from "../../features/loggedInUser/loggedInUser";
 
@@ -20,7 +20,7 @@ function FindGames() {
       });
       const { gamesArray } = data;
       setAllgamesArray(gamesArray);
-      console.log(gamesArray)
+      console.log(gamesArray);
     } catch (error) {
       console.error(error);
     }

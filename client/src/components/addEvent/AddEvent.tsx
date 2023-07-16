@@ -2,11 +2,11 @@ import { useAppSelector } from "../../app/hooks";
 import { userSelector } from "../../features/loggedInUser/loggedInUser";
 import Calendar from "../calender/ReactCalender";
 import { useState, useEffect } from "react";
-import { GameModel } from "./../myGames/MyGames";
+import { GameModel } from "../../views/myGames/MyGames";
 import axios from "axios";
-import { login } from './../../features/loggedInUser/userAPI';
-import { useAppDispatch } from './../../app/hooks';
-import { useNavigate } from 'react-router-dom';
+import { login } from "./../../features/loggedInUser/userAPI";
+import { useAppDispatch } from "./../../app/hooks";
+import { useNavigate } from "react-router-dom";
 
 export const AddEvent = () => {
   useEffect(() => {
@@ -19,8 +19,6 @@ export const AddEvent = () => {
   const dispatch = useAppDispatch();
   const [addedevent, setAddedEvent] = useState<boolean>(false);
   const navigate = useNavigate();
-
-
 
   async function getUserGames() {
     try {
@@ -58,12 +56,12 @@ export const AddEvent = () => {
         eventLocationAddress,
         eventSpots,
         SelectedGameId,
-        userId
+        userId,
       });
-      const {results} = data;
+      const { results } = data;
 
-      if(results.affectedRows > 0) setAddedEvent(true)
-      navigate("/my-game-nights")
+      setAddedEvent(true);
+      navigate("/my-game-nights");
     } catch (error) {
       console.error(error);
     }
@@ -88,13 +86,18 @@ export const AddEvent = () => {
         <label htmlFor="gamesList">Choose from your games:</label>
         <select className="select" name="gamesList">
           {games.map((game, idx) => {
-            return ( //@ts-ignore
-              <option className="options" key={idx} value={game.gameId._id}> {game.gameId.gameName}
+            return (
+              //@ts-ignore
+              <option className="options" key={idx} value={game.gameId._id}>
+                {/*//@ts-ignore*/}
+                {game.gameId.gameName}
               </option>
             );
           })}
         </select>
-        <button className="button_main" type="submit">Add Event</button>
+        <button className="button_main" type="submit">
+          Add Event
+        </button>
         {addedevent && <p className="good">Event Added Successfully!</p>}
       </form>
     </div>

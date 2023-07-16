@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "./../header/Header";
-import NavBar from "./../navbar/NavBar";
-import { FullCalenderReact } from "../calender/fullCalender/FullCalender";
-import Calendar from "../calender/ReactCalender";
-import { AddEvent } from "./../addEvent/AddEvent";
-import { NextGame } from "./../nextGame/NextGame";
+import Header from "../../components/header/Header";
+import NavBar from "../../components/navbar/NavBar";
+import { FullCalenderReact } from "../../components/calender/fullCalender/FullCalender";
+import Calendar from "../../components/calender/ReactCalender";
+import { AddEvent } from "../../components/addEvent/AddEvent";
+import { NextGame } from "../../components/nextGame/NextGame";
 
 function MyGameNights() {
   return (
