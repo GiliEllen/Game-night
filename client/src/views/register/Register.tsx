@@ -183,7 +183,7 @@ export const Register = () => {
                   value={input.rePassword}
                   onChange={onInputChange}
                   onBlur={validateInput}
-                  type="password"
+                  type={showRePassword ? "text" : "password"}
                   name="rePassword"
                   placeholder="Repeat Your Password"
                   helperText={
