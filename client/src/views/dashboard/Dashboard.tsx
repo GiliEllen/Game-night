@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/header/Header";
 import NavBar from "../../components/navbar/NavBar";
 import ReactCalender from "../../components/calender/ReactCalender";
@@ -8,6 +8,7 @@ import { login } from "../../features/loggedInUser/userAPI";
 import { FullCalenderReact } from "../../components/calender/fullCalender/FullCalender";
 
 function Dashboard() {
+  const [events, setEvents] = useState([]);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(login());
@@ -19,7 +20,7 @@ function Dashboard() {
       <NavBar />
 
       <div className="main main_calendar">
-        <FullCalenderReact />
+        <FullCalenderReact events={events} setEvents={setEvents}/>
       </div>
       <div className="top_section">
         <NextGame />

@@ -7,8 +7,13 @@ import axios from "axios";
 import { login } from "./../../features/loggedInUser/userAPI";
 import { useAppDispatch } from "./../../app/hooks";
 import { useNavigate } from "react-router-dom";
+import { FC } from "react";
 
-export const AddEvent = () => {
+interface AddEventProps {
+  setEvents: CallableFunction;
+}
+
+export const AddEvent: FC<AddEventProps> = ({ setEvents }) => {
   useEffect(() => {
     dispatch(login());
     getUserGames();
@@ -59,6 +64,7 @@ export const AddEvent = () => {
         userId,
       });
       const { results } = data;
+      setEvents((prev:any) => [...prev, results])
 
       setAddedEvent(true);
       navigate("/my-game-nights");

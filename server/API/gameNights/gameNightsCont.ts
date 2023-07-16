@@ -45,7 +45,19 @@ export async function addEvent(req: express.Request, res: express.Response) {
 
     if (!eventDB) throw new Error("no event created");
 
-    res.send({ results: eventDB });
+    const eventDbWithPopulate = await GameNightModel.findById(
+      eventDB._id
+    ).populate(["gameId"]);
+    if (!eventDbWithPopulate) throw new Error("no event to fill");
+
+    const eventToSend = {
+      id: eventDbWithPopulate._id, //@ts-ignore
+      title: eventDbWithPopulate.gameId?.gameName,
+      start: eventDbWithPopulate.date, //@ts-ignore
+      description: `You will play ${eventDbWithPopulate.gameId?.gameName} at ${eventDbWithPopulate.city}, ${eventDbWithPopulate.address}, hosted by You.`,
+    };
+
+    res.send({ results: eventToSend });
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error });
@@ -90,23 +102,10 @@ export async function getUserEvents(
         id: result._id, //@ts-ignore
         title: result.gameNightId?.gameId.gameName, //@ts-ignore
         start: result.gameNightId?.date, //@ts-ignore
-        description: `You will play ${result.gameNightId?.gameId.gameName} at ${result.result.gameNightId?.city}, ${result.result.gameNightId?.ddress}`,
+        description: `You will play ${result.gameNightId?.gameId.gameName} at ${result.result.gameNightId?.city}, ${result.result.gameNightId?.address}`,
       });
     });
     res.send({ userEvents });
-
-    // const query = `SELECT * FROM gamenight.game_events as ge
-    // JOIN gamenight.games as g
-    // ON ge.game_id = g.game_id AND ge.user_host_id = ${userID}
-    // ;
-    // SELECT * from game_events
-    // JOIN games
-    // WHERE games.game_id = game_events.game_id
-    // AND game_events.game_events_id IN (
-    //   SELECT game_event_id
-    //     FROM game_events_spots
-    //     WHERE user_atendee_id = '${userID}'
-    // );`;
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error });
@@ -221,15 +220,19 @@ export async function deleteEventById(
   res: express.Response
 ) {
   try {
-    const {eventId} = req.params
-    if(!eventId) throw new Error("no event Id on deleteEventById at gamenightCtrl")
-    const userIdToEmail = await GameNightSpotsModel.find({gameNightId: eventId})
-    const deleteEventSpots = await GameNightSpotsModel.deleteMany({gameNightId: eventId})
+    const { eventId } = req.params;
+    if (!eventId)
+      throw new Error("no event Id on deleteEventById at gamenightCtrl");
+    const userIdToEmail = await GameNightSpotsModel.find({
+      gameNightId: eventId,
+    });
+    const deleteEventSpots = await GameNightSpotsModel.deleteMany({
+      gameNightId: eventId,
+    });
 
     const eventDB = await GameNightModel.findByIdAndDelete(eventId);
 
-    res.send({ok: true})
-
+    res.send({ ok: true });
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error });

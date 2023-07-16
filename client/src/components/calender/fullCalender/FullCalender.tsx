@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
@@ -8,10 +8,18 @@ import { userSelector } from "../../../features/loggedInUser/loggedInUser";
 import { useEffect } from "react";
 import { Paper, Typography, Box, Button } from "@mui/material";
 
-export const FullCalenderReact = () => {
+interface FullCalendarReactProps {
+  events: any;
+  setEvents: CallableFunction;
+}
+
+export const FullCalenderReact: FC<FullCalendarReactProps> = ({
+  events,
+  setEvents,
+}) => {
   const loggedInUser = useAppSelector(userSelector);
   const userId = loggedInUser?._id;
-  const [events, setEvents] = useState([]);
+
   const [eventToEditInfo, setEventToEditInfo] = useState<any>();
   const [display, setdisplay] = useState<boolean>(false);
   const [displayDelete, setDisplayDelete] = useState<boolean>(false);
@@ -90,9 +98,9 @@ export const FullCalenderReact = () => {
         `/api/game-nights/${eventToEdit._id}`
       );
       console.log(data);
-      setDisplayDelete(false)
+      setDisplayDelete(false);
       setdisplay(false);
-      handlegGetUserEvents()
+      handlegGetUserEvents();
     } catch (error) {
       console.error(error);
     }
@@ -103,7 +111,7 @@ export const FullCalenderReact = () => {
   }, [eventToEditInfo]);
 
   return (
-    <div style={{position: "relative"}}>
+    <div style={{ position: "relative" }}>
       {!display ? null : isUserHost ? (
         <div className="edit-container">
           <h3>Edit My Event</h3>
@@ -169,7 +177,14 @@ export const FullCalenderReact = () => {
         </div>
       )}
       {display && displayDelete ? (
-        <Paper sx={{position: "absolute", top: 0, left: 0, transform: "translate(50%, 50%)"}}>
+        <Paper
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            transform: "translate(50%, 50%)",
+          }}
+        >
           <Typography sx={{ paddingTop: 5, paddingInline: 3 }} variant="h5">
             Are you sure you want to delete this event?
           </Typography>
@@ -185,7 +200,11 @@ export const FullCalenderReact = () => {
               paddingBottom: 5,
             }}
           >
-            <Button onClick={handleDeleteEvent} color="secondary" variant="contained">
+            <Button
+              onClick={handleDeleteEvent}
+              color="secondary"
+              variant="contained"
+            >
               YES
             </Button>
             <Button
