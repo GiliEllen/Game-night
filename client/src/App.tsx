@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { userSelector } from "./features/loggedInUser/loggedInUser";
 import { useEffect } from "react";
 import { login } from "./features/loggedInUser/userAPI";
-import HomePage from "./features/homePage/HomePage";
+import HomePage from "./views/homePage/HomePage";
 import Dashboard from "./views/dashboard/Dashboard";
 import MyGameNights from "./views/myGameNight/MyGameNights";
 import MyGames from "./views/myGames/MyGames";

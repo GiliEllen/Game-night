@@ -1,13 +1,13 @@
-@import "./features/register/register.scss";
-@import "./features/login/login.scss";
+@import "./views/register/register.scss";
+@import "./views/login/login.scss";
 @import"./components/header/header.scss";
 @import "./components/navbar/navbar.scss";
-@import "./features/homePage/homePage.scss";
+@import "./views/homePage/homePage.scss";
 @import "./components/nextGame/nextGame.scss";
 @import "./views/dashboard/dashboard.scss";
-@import "./components/myGameNight/myGameNight.scss";
-@import "./components/myGames/game/game.scss";
-@import "./components/findGameNights/findGameNight.scss";
+@import "./views/myGameNight/myGameNight.scss";
+@import "./components/game/game.scss";
+@import "./views/findGameNights/findGameNight.scss";
 @import "./components/calender/fullCalender/fullCalender.scss";
 
 :root {
