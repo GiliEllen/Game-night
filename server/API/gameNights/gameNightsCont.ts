@@ -176,6 +176,7 @@ export async function checkIfUserCanJoinGame(
   try {
     const { gameEventId, userId } = req.body;
     let userJoin;
+    let isEventFull = false
     if (!gameEventId || !userId)
       throw new Error(
         "no information on checkIfUserCanJoinGame at gamenightCtrl"
@@ -188,13 +189,15 @@ export async function checkIfUserCanJoinGame(
         "userAtendeeId",
       ]),
     ]);
-    if (!gameEventAtendees || !gameEventDB) {
+
+    if (!gameEventAtendees  || !gameEventDB) {
       throw new Error(
         "no events found on checkIfUserCanJoinGame at gameNightCtrl"
       );
     } else {
-      if (gameEventDB.spotsAvaliable! < gameEventAtendees.length) {
+      if (gameEventDB.spotsAvaliable! <= gameEventAtendees.length) {
         userJoin = false;
+        isEventFull = true;
       } else {
         if (
           gameEventAtendees.some(
@@ -208,7 +211,7 @@ export async function checkIfUserCanJoinGame(
       }
     }
 
-    res.send({ userJoin: userJoin });
+    res.send({ userJoin, isEventFull });
   } catch (error) {
     console.log(error);
     res.status(500).send({ error: error });
