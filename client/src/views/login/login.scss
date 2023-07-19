@@ -2,7 +2,7 @@
 .session_login {
     width: 100vw;
     height: 100vh;
-    background-color:var(--backgroundColor);
+    // background-color:var(--backgroundColor);
     display: flex;
     text-align: center;
     background-image: url(../../images/2002.i109.024.people-playing-board-games-isometric-set-Converted.png);
@@ -56,3 +56,33 @@
     }
 }
 
+.form_container_back_login {
+    background-image: url("../../images/wave.svg");
+    background-repeat: no-repeat;
+    // background-position: 0;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0px;
+    height: 100vw;
+    width: 100vw;
+    transform: rotate(90deg);
+    z-index: -1;
+    // transform-origin: top left;
+    // transform: scaleY(-1) rotate(90deg);
+}
+
+@media only screen 
+and (max-width : 768px) {
+    .session_login {
+        width: 100vw;
+        height: 100vh;
+        background-color: #9147ff;
+
+        &__form_container_login {
+           
+    
+            
+        }
+    }
+}
