@@ -79,3 +79,72 @@
     // transform-origin: top left;
     // transform: scaleY(-1) rotate(90deg);
 }
+
+@media only screen 
+   and (max-width : 320px) {
+    .session {
+        width: 100vw;
+        height: 100vh;
+        background-image: none;
+        background-color: var(--divBackgroundColor);
+
+        &__form_container {
+            width: 100%;
+            padding: 12px;
+            height: 100vh;
+            background-color: var(--divBackgroundColor);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+    
+            form {
+                font-size: 1.5rem;
+                width: 100%;
+    
+                h1 {
+                    font-family: 'Fredoka One', cursive;
+                }
+    
+                height: 60%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                align-content: center;
+                justify-content: space-around;
+    
+                input {
+                    font-family: 'Rubik', sans-serif;
+                    width: 70%;
+                    font-size: 20px;
+                    border-radius: 6px;
+                    line-height: 1.5;
+                    padding: 5px 10px;
+                    transition: box-shadow 100ms ease-in, border 100ms ease-in, background-color 100ms ease-in;
+                    border: 2px solid #dee1e2;
+                    color: rgb(14, 14, 16);
+                    background: var(--backgroundColor);
+                    display: block;
+                    height: 3rem;
+    
+                    &:hover {
+                        border-color: #ccc;
+                    }
+    
+                    &:focus {
+                        outline: none;
+                        border-color: #9147ff;
+                        background: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    .form_container_back {
+        background-image: none;
+    }
+
+    .container {
+        width: 100%
+    }
+}
