@@ -79,9 +79,12 @@
     // transform-origin: top left;
     // transform: scaleY(-1) rotate(90deg);
 }
+.container {
+    width: 30vw
+}
 
 @media only screen 
-   and (max-width : 320px) {
+   and (max-width : 768px) {
     .session {
         width: 100vw;
         height: 100vh;
