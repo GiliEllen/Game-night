@@ -53,7 +53,7 @@ export const Login = () => {
       <Box className="form_container_back_login">hello</Box>
       <Container>
         <Container sx={{ margin: 0 }}>
-          <Box sx={{ height: "100vh", width: "30vw" }}>
+          <Box sx={{ height: "100vh"}} className="container">
             <form
               style={{ height: "100%", width: "100%" }}
               onSubmit={handleLogin}
