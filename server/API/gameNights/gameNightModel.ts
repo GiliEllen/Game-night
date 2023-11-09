@@ -30,3 +30,4 @@ const GameNightSchema = new mongoose.Schema({
   });
   
   export const GameNightSpotsModel = mongoose.model("gamenightspots", GameNightSpotsSchema);
+

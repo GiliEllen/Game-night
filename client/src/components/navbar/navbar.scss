@@ -2,11 +2,12 @@
     background-color: var(--divBackgroundColor);
     grid-area: navBar;
     &__link_continer {
-        height: 50vh;
+        // height: 50vh;
         display: flex;
         flex-direction: column;
-        
+        // justify-content: space-around;
         font-size: 1.2rem;
+        width: 250px;
         
         a {
             padding: 30px 12px;
