@@ -4,12 +4,9 @@ import { logoutUser, userSelector } from "../../features/loggedInUser/loggedInUs
 import logo from "../../images/logo.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { IconButton, Box, Container } from "@mui/material";
+import { IconButton, Box } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
-import NavBar from "../navbar/NavBar";
 import { displayMenuSelector, setDisplayMenu } from './../../features/displayMenu/displayMenuSlice';
 
 
@@ -19,7 +16,6 @@ const Header:FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const [error, setError] = useState(false);
-  // const [displayMenu, setDisplayMenu] = useState(false);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
   async function handleLogout() {
     try {
@@ -33,7 +29,7 @@ const Header:FC = () => {
     }
   }
 
-  if (windowSize.current[0] > 768) {
+  if (windowSize.current[0] > 958) {
     return (
       <div className="header header_grid">
         <div className="header__right">
@@ -46,20 +42,9 @@ const Header:FC = () => {
         </div>
         <div className="header__left">
           <div className="header__left__user_settings">
-            {/* <IconButton>
-              <NotificationsIcon />
-            </IconButton>
-            <IconButton>
-              <SettingsIcon />
-            </IconButton> */}
             <IconButton onClick={handleLogout}>
               <LogoutIcon />
             </IconButton>
-            {/* <span className="material-symbols-outlined">notifications</span>
-            <span className="material-symbols-outlined">settings</span>
-            <div onClick={handleLogout}>
-              <span className="material-symbols-outlined">logout</span>
-            </div> */}
           </div>
         </div>
       </div>
