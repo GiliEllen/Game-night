@@ -10,14 +10,16 @@ import { IconButton, Box, Container } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavBar from "../navbar/NavBar";
+import { displayMenuSelector, setDisplayMenu } from './../../features/displayMenu/displayMenuSlice';
 
 
 const Header:FC = () => {
   const loggedInUser = useAppSelector(userSelector);
+  const displayMenu = useAppSelector(displayMenuSelector)
   const navigate = useNavigate();
   const dispatch = useAppDispatch()
   const [error, setError] = useState(false);
-  const [displayMenu, setDisplayMenu] = useState(false);
+  // const [displayMenu, setDisplayMenu] = useState(false);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
   async function handleLogout() {
     try {
@@ -77,8 +79,8 @@ const Header:FC = () => {
           }}
         >
           <IconButton
-            onClick={(ev) => {
-              setDisplayMenu(!displayMenu);
+            onClick={() => {
+              dispatch(setDisplayMenu(!displayMenu));
             }}
           >
             <MenuIcon />
@@ -86,9 +88,6 @@ const Header:FC = () => {
           <IconButton onClick={handleLogout}>
             <LogoutIcon />
           </IconButton>
-        </Box>
-        <Box sx={{ display: displayMenu ? "block" : "none" }}>
-          <NavBar />
         </Box>
       </Box>
     );

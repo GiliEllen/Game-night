@@ -1,6 +1,6 @@
 @import "./views/register/register.scss";
 @import "./views/login/login.scss";
-@import"./components/header/header.scss";
+@import "./components/header/header.scss";
 @import "./components/navbar/navbar.scss";
 @import "./views/homePage/homePage.scss";
 @import "./components/nextGame/nextGame.scss";
@@ -11,80 +11,76 @@
 @import "./components/calender/fullCalender/fullCalender.scss";
 
 :root {
-    --backgroundColor: #F7F7F5;
-    --divBackgroundColor: #BCECE5;
-    --divBackgroundColorOnHover: #a0d8cf;
-    --borderRadius: 12px 12px 12px 12px;
-    --borderColor: #71CCBD;
-    --button-main-color: #9877A9;
-    --button-main-border-color: #611F38;
-    --fontColorOnMain: #00201D;
+  --backgroundColor: #f7f7f5;
+  --divBackgroundColor: #bcece5;
+  --divBackgroundColorOnHover: #a0d8cf;
+  --borderRadius: 12px 12px 12px 12px;
+  --borderColor: #71ccbd;
+  --button-main-color: #9877a9;
+  --button-main-border-color: #611f38;
+  --fontColorOnMain: #00201d;
 }
 
 body {
-    font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .button_main {
-    background-color: var(--button-main-color);
-    border: 1px solid var(--button-main-border-color);
-    border-radius: 50px;
-    padding: 20px 40px;
-    color: #F7F7F5;
+  background-color: var(--button-main-color);
+  border: 1px solid var(--button-main-border-color);
+  border-radius: 50px;
+  padding: 20px 40px;
+  color: #f7f7f5;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .button_add {
-    background-color: var(--button-main-color);
-    border: 1px solid var(--button-main-border-color);
-    border-radius: 50px;
-    padding: 15px 30px;
-    color: #F7F7F5;
+  background-color: var(--button-main-color);
+  border: 1px solid var(--button-main-border-color);
+  border-radius: 50px;
+  padding: 15px 30px;
+  color: #f7f7f5;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .material-symbols-outlined {
-    font-variation-settings:
-        'FILL'0,
-        'wght'400,
-        'GRAD'0,
-        'opsz'48
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .page {
-    overflow: hidden;
-    display: grid;
-    height: 100vh;
-    width: 100vw;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "header header header header header header "
-        "navBar main main main top_section top_section"
-        "navBar main main main top_section top_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section"
-        "navBar main main main bottom_section bottom_section";
+  overflow: hidden;
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "header header header header header header "
+    "navBar main main main top_section top_section"
+    "navBar main main main top_section top_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section"
+    "navBar main main main bottom_section bottom_section";
 }
 
 .header_grid {
-    grid-area: header;
+  grid-area: header;
 }
 
 // .navBar {
@@ -92,28 +88,41 @@ body {
 // }
 
 .main {
-    grid-area: main;
+  grid-area: main;
 }
 
 .top_section {
-    grid-area: top_section;
+  grid-area: top_section;
 }
 
 .bottom_section {
-    grid-area: bottom_section;
+  grid-area: bottom_section;
 }
 
 .full_page {
-    grid-area: 2 / 2 / 11 /11;
-    overflow-y: scroll;
+  grid-area: 2 / 2 / 11 /11;
+  overflow-y: scroll;
 
-    .container_cards {
-        height: max-content;
-        overflow-y: scroll;
-    }
+  .container_cards {
+    height: max-content;
+    overflow-y: scroll;
+  }
 }
 
-@media only screen 
-   and (max-width : 320px) {
-   /* Styles here */
+@media only screen and (max-width: 958px) {
+  body {
+    overflow: scroll;
+  }
+  .page {
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+  }
+
+  .navbar {
+    position: absolute;
+    z-index: 10;
+    top: 40px
+  }
+
 }

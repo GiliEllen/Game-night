@@ -3,32 +3,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Register } from "./views/register/Register";
 import { Page404 } from "./views/page404/Page404";
 import { Login } from "./views/login/Login";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { userSelector } from "./features/loggedInUser/loggedInUser";
-import { useEffect, useState } from "react";
-import { login } from "./features/loggedInUser/userAPI";
 import HomePage from "./views/homePage/HomePage";
 import Dashboard from "./views/dashboard/Dashboard";
 import MyGameNights from "./views/myGameNight/MyGameNights";
 import MyGames from "./views/myGames/MyGames";
 import FindGames from "./views/findGames/FindGames";
 import { FindGameNights } from "./views/findGameNights/FindGameNights";
-import Header from "./components/header/Header";
-import NavBar from "./components/navbar/NavBar";
 
 function App() {
-  const loggedInUser = useAppSelector(userSelector);
-  // const [displayMenu, setDisplayMenu] = useState(false);
 
   return (
     <BrowserRouter>
-      {/* {loggedInUser ? (
-        <div className="page">
-          <Header displayMenu={displayMenu} setDisplayMenu={setDisplayMenu} />{" "}
-          <NavBar />
-        </div>
-      ) : null} */}
-
       <Routes>
         <Route path="*" element={<Page404 />} />
         <Route path="/" element={<Register />} />
