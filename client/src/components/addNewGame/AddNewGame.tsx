@@ -18,6 +18,7 @@ const AddNewGame: FC<AddGamesProps> = ({ userGames }) => {
   const [gameExist, setGameExist] = useState(false);
   const [possibleGame, setPossibleGame] = useState<GameModel[]>([]);
   const [allowAdd, setAllowAdd] = useState<Boolean>(false);
+  const [searchedGame, setSearchedGame] = useState("")
 
   async function handleAddGame(ev: any) {
     try {
@@ -37,40 +38,73 @@ const AddNewGame: FC<AddGamesProps> = ({ userGames }) => {
     }
   }
 
-  async function handleLookForGameName(ev: any) {
-    try {
-      ev.preventDefault();
-      const gameName = ev.target.value;
-      if (!gameName) {
-        setGameExist(false);
-        setPossibleGame([]);
-        return;
+  // async function handleLookForGameName(ev: any) {
+  //   try {
+  //     ev.preventDefault();
+  //     const gameName = ev.target.value;
+  //     if (!gameName) {
+  //       setGameExist(false);
+  //       setPossibleGame([]);
+  //       return;
+  //     }
+  //     const { data } = await axios.post("/api/games/find-game-by-name", {
+  //       gameName,
+  //     });
+  //     if (!data) throw new Error("no data on /api/games/find-game-by-name");
+  //     const { gamesArray } = data;
+  //     if (gamesArray.length === 0) {
+  //       console.log("no game with this name is found");
+  //       setGameExist(false);
+  //       setPossibleGame([]);
+  //       setAllowAdd(true);
+  //     } else if (gamesArray.length > 0) {
+  //       console.log("game avilable");
+  //       setGameExist(true);
+  //       setPossibleGame(gamesArray);
+  //       setAllowAdd(false);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  useEffect(() => {
+    const getData = setTimeout(async () => {
+      try {
+        if (!searchedGame) {
+          setGameExist(false);
+          setPossibleGame([]);
+          return;
+        }
+        const { data } = await axios.post("/api/games/find-game-by-name", {
+          gameName: searchedGame,
+        });
+        if (!data) throw new Error("no data on /api/games/find-game-by-name");
+        const { gamesArray } = data;
+        if (gamesArray.length === 0) {
+          console.log("no game with this name is found");
+          setGameExist(false);
+          setPossibleGame([]);
+          setAllowAdd(true);
+        } else if (gamesArray.length > 0) {
+          console.log("game avilable");
+          setGameExist(true);
+          setPossibleGame(gamesArray);
+          setAllowAdd(false);
+        }
+      } catch (error) {
+        console.error(error);
       }
-      const { data } = await axios.post("/api/games/find-game-by-name", {
-        gameName,
-      });
-      if (!data) throw new Error("no data on /api/games/find-game-by-name");
-      const { gamesArray } = data;
-      if (gamesArray.length === 0) {
-        console.log("no game with this name is found");
-        setGameExist(false);
-        setPossibleGame([]);
-        setAllowAdd(true);
-      } else if (gamesArray.length > 0) {
-        console.log("game avilable");
-        setGameExist(true);
-        setPossibleGame(gamesArray);
-        setAllowAdd(false);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    }, 2000)
+
+    return () => clearTimeout(getData)
+  }, [searchedGame])
+
   return (
     <div className="add_new_game">
       <form onSubmit={handleAddGame}>
         <input
-          onChange={handleLookForGameName}
+          onChange={(ev) => setSearchedGame(ev.target.value)}
           type="text"
           name="gameName"
           placeholder="Enter Game Name Here"

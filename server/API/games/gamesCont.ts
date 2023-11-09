@@ -46,7 +46,7 @@ export async function findGameByName(
     const { gameName } = req.body;
     if (!gameName) throw new Error("no game from client on findGameByName");
 
-    const regExpName = new RegExp(gameName, "i");
+    const regExpName = new RegExp("^" + gameName, "i");
 
     const [gamesDB, userGameDB] = await Promise.all([
       GameModel.find({ gameName: regExpName }),
@@ -77,9 +77,9 @@ export async function findGameByName(
           gameAddble: true,
         });
       }
-
-      res.send({ gamesArray });
     });
+    res.send({ gamesArray });
+    // res.send({ok: false})
   } catch (error) {
     res.status(500).send({ error: error });
   }
@@ -199,7 +199,7 @@ export async function deleteGameFromUserGames(
     const userGame = await UserGameModel.findOneAndDelete({ userId, gameId });
     if (!userGame) throw new Error("no game was deleted");
 
-    res.send({ok: true, userGame });
+    res.send({ ok: true, userGame });
   } catch (error: any) {
     res.status(500).send({ eror: error.message });
   }

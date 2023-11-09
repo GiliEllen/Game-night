@@ -39,6 +39,7 @@ function MyGames() {
       });
       if (!data) throw new Error("no data from serever");
       const { results } = data;
+      console.log(results)
       setGames(results);
     } catch (error) {
       console.log(error);
