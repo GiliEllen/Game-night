@@ -119,7 +119,13 @@ export async function getAllEvents(
   try {
     const eventsDB = await GameNightModel.find().populate(["gameId", "hostId"]);
 
-    res.send({ results: eventsDB });
+    const today = new Date()
+    const results = eventsDB.filter((event) => {
+      if (today < new Date(event.date!)) {
+        return event
+      } 
+    })
+    res.send({ results: results });
   } catch (error: any) {
     console.log(error);
     res.status(500).send({ error: error });

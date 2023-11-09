@@ -35,7 +35,7 @@ export const Login = () => {
         console.log("no user found");
       } else if (data.login) {
         console.log("user found!");
-        navigate("/home");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);

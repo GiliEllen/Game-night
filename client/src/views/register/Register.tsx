@@ -88,7 +88,7 @@ export const Register = () => {
       });
       const { ok } = data;
 
-      ok ? navigate("/home") : setRegisterError(true);
+      ok ? navigate("/dashboard") : setRegisterError(true);
     } catch (error) {
       console.log(error);
     }
